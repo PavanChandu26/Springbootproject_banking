@@ -3,6 +3,7 @@ package com.bankingAPI.BankingAPI1.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import com.bankingAPI.BankingAPI1.Services.BankingService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = {"http://localhost:5173", "https://resonant-cobbler-d8527c.netlify.app"})
 public class BankingController {
 	
 	@Autowired
@@ -52,7 +54,7 @@ public class BankingController {
 		BankingEntity b1=bs.findByIdUser(id).orElseThrow(()->new UserNotFoundException("User Not Found "));
 		double newBal=b.getBalance();
 		double oldBal=b1.getBalance();
-		if(oldBal>newBal) {
+		if(oldBal>=newBal) {
 		oldBal=oldBal-newBal;
 		b1.setBalance(oldBal);
 		return bs.withdrawamount(b1);
